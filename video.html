@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Piadas e vídeos com o melhor do humor e cerveja. Ria e divirta-se!" />
+  <meta name="keywords" content="piadas, cerveja, vídeos engraçados, comédia, diversão" />
+  <meta name="author" content="Equipe Piadas & Cerveja" />
+
+  <!-- Meta redes sociais -->
+  <meta property="og:title" content="Piadas Engraçadas e Cerveja!" />
+  <meta property="og:description" content="Assista aos vídeos mais engraçados e entre no clima da cerveja!" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://seudominio.com/piadas" />
+  <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Emoji_u1f602.svg/1200px-Emoji_u1f602.svg.png" />
+  <meta name="robots" content="index, follow" />
+
+  <title>Humor com Sabor de Cerveja 🍺</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fff8dc; /* cor clara lembrando espuma */
+      color: #4b2e0d; /* cor marrom escura para texto */
+      margin: 0;
+      padding: 0;
+    }
+
+    .ad-banner {
+      background-color: #ffc107; /* amarelo cerveja */
+      color: #4b2e0d;
+      text-align: center;
+      padding: 15px;
+      font-size: 20px;
+      font-weight: bold;
+      animation: blink 1s infinite;
+      position: relative;
+      z-index: 9999;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 5px;
+      right: 15px;
+      font-size: 24px;
+      font-weight: bold;
+      color: #4b2e0d;
+      cursor: pointer;
+    }
+
+    header {
+      background-color: #d4a017; /* dourado cerveja */
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+      border-bottom: 3px solid #4b2e0d;
+    }
+
+    .video-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 40px 0;
+    }
+
+    iframe {
+      width: 90%;
+      max-width: 720px;
+      height: 405px;
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 0 20px #d4a017;
+    }
+
+    .random-content {
+      font-size: 22px;
+      font-weight: bold;
+      color: #a0522d;
+      text-align: center;
+      margin: 30px auto;
+      max-width: 90%;
+      user-select: text;
+    }
+
+    footer {
+      background-color: #d4a017;
+      color: #fff;
+      text-align: center;
+      padding: 10px;
+      border-top: 3px solid #4b2e0d;
+    }
+
+    h2 {
+      color: #a0522d;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    a#adLink {
+      color: #4b2e0d;
+      text-decoration: none;
+    }
+
+    a#adLink:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="ad-banner" id="adBanner">
+    <span class="close-btn" onclick="document.getElementById('adBanner').style.display='none'">&times;</span>
+    <a id="adLink" href="#" target="_blank"></a>
+  </div>
+
+  <header>
+    <h1>Humor com Sabor de Cerveja 🍻</h1>
+    <p>Piadas, vídeos e diversão gelada!</p>
+  </header>
+
+  <div class="video-container">
+    <h2 id="videoTitle"></h2>
+    <iframe id="videoFrame" allowfullscreen></iframe>
+  </div>
+
+  <div class="random-content" id="randomContent"></div>
+
+  <footer>
+    &copy;  Piadas & Cerveja - Todos os direitos reservados.
+  </footer>
+
+  <script>
+    const links = [
+      { url: "index.html", texto: "CALCULADORA DE CONSUMO DE CERVEJA" }
+    ];
+
+    const videoIDs = [
+      "Su5by_N8aSE",
+
+    ];
+
+    const videoTitles = [
+      "CERVEJA SEM ÀLCOOL",
+
+    ];
+
+    function generateRandomContent(length = 500) {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:,.<>?';
+      let result = '';
+      for (let i = 0; i < length; i++) {
+        result += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return result;
+    }
+
+    function rotateAdBanner() {
+      const ad = links[Math.floor(Math.random() * links.length)];
+      const adLink = document.getElementById("adLink");
+      adLink.href = ad.url;
+      adLink.innerHTML = ad.texto;
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const randomIndex = Math.floor(Math.random() * videoIDs.length);
+      document.getElementById("videoFrame").src = `https://www.youtube.com/embed/${videoIDs[randomIndex]}`;
+      document.getElementById("videoTitle").textContent = videoTitles[randomIndex];
+      
+      const randomLength = Math.floor(Math.random() * 500) + 100;
+      document.getElementById("randomContent").textContent = generateRandomContent(randomLength);
+
+      rotateAdBanner();
+      setInterval(rotateAdBanner, 5000);
+    });
+  </script>
+</body>
+</html>
