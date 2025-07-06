@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="robots" content="index,follow" />
+  <meta name="description" content="Calculadora de cerveja que você tomou durante a semana!" />
+  <meta name="keywords" content="cerveja, bebida, cálculo, calculadora de cerveja" />
+  <style>
+    #novo {
+      display: inline-block;
+      padding: 10px 20px;
+      font-size: 1rem;
+      background-color: #e67e22;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      margin: 10px auto;
+      text-align: center;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      cursor: pointer;
+      user-select: none;
+      display: block;
+      width: max-content;
+    }
+
+    #novo:hover {
+      background-color: #d35400;
+      transform: scale(1.05);
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background: #f8f8f8;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    form input {
+      padding: 10px;
+      font-size: 1rem;
+      width: 200px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    form button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      background-color: #2c3e50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    form button:hover {
+      background-color: #34495e;
+    }
+
+    #table-container {
+      overflow-x: auto;
+      max-width: 100%;
+    }
+
+    table {
+      border-collapse: collapse;
+      min-width: 800px;
+      width: 100%;
+      font-size: 1rem;
+      text-align: center;
+      border: 2px solid #333;
+      background: #fff;
+    }
+
+    th, td {
+      border: 1px solid #aaa;
+      padding: 10px 8px;
+    }
+
+    th {
+      background-color: #ddd;
+    }
+
+    #video-player {
+      margin: 20px auto;
+      max-width: 560px;
+      text-align: center;
+    }
+
+    #video-player iframe,
+    #video-player img {
+      max-width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    #video-player iframe {
+      aspect-ratio: 16 / 9;
+      height: auto;
+    }
+
+    #video-player a {
+      display: inline-block;
+      text-decoration: none;
+    }
+
+    @media (max-width: 600px) {
+      form input {
+        width: 100%;
+      }
+
+      table {
+        font-size: 0.85rem;
+      }
+
+      #video-player iframe {
+        height: 315px;
+      }
+    }
+
+    /* Rodapé randomico */
+    #random-footer {
+      margin-top: 40px;
+      font-family: monospace;
+      font-size: 0.8rem;
+      color: #888;
+      text-align: center;
+      user-select: none;
+      letter-spacing: 2px;
+    }
+  </style>
+  <title>Calculadora de Cerveja levando em consideração cada cerveja a 5 reais cada</title>
+</head>
+<body>
+
+  <h1>Calculadora de Cerveja levando em consideração cada cerveja a 5 reais cada</h1>
+  <a id="novo" onclick="mostrarVideoOuImagem()" href="javascript:void(0)" title="Clique para mostrar um vídeo ou imagem randomica">CONFERIR</a>
+
+  <form id="formulario">
+    <input type="number" id="seg" placeholder="Segunda-feira" min="0" />
+    <input type="number" id="ter" placeholder="Terça-feira" min="0" />
+    <input type="number" id="qua" placeholder="Quarta-feira" min="0" />
+    <input type="number" id="qui" placeholder="Quinta-feira" min="0" />
+    <input type="number" id="sex" placeholder="Sexta-feira" min="0" />
+    <input type="number" id="sab" placeholder="Sábado" min="0" />
+    <input type="number" id="dom" placeholder="Domingo" min="0" />
+    <button type="button" onclick="calcular()">Calcular</button>
+  </form>
+
+  <div id="table-container">
+    <table id="ok">
+      <thead>
+        <tr>
+          <th>Segunda</th>
+          <th>Terça</th>
+          <th>Quarta</th>
+          <th>Quinta</th>
+          <th>Sexta</th>
+          <th>Sábado</th>
+          <th>Domingo</th>
+          <th>Total semanal (R$)</th>
+        </tr>
+      </thead>
+      <tbody id="tabela-body">
+        <!-- dados vão aqui -->
+      </tbody>
+    </table>
+  </div>
+
+  <div id="video-player"></div>
+
+  <div id="random-footer"></div>
+
+<script>
+  function calcular() {
+    const ids = ["seg", "ter", "qua", "qui", "sex", "sab", "dom"];
+    const consumos = ids.map(id => parseInt(document.getElementById(id).value, 10) || 0);
+
+    const total = consumos.reduce((soma, valor) => soma + valor, 0);
+    const totalGasto = total * 5; // R$ 5 por cerveja
+
+    const tbody = document.getElementById("tabela-body");
+    tbody.innerHTML = ""; // limpa antes de adicionar
+
+    const tr = document.createElement("tr");
+
+    consumos.forEach(valor => {
+      const td = document.createElement("td");
+      td.textContent = valor;
+      tr.appendChild(td);
+    });
+
+    const tdTotal = document.createElement("td");
+    tdTotal.textContent = `R$ ${totalGasto.toFixed(2)}`;
+    tr.appendChild(tdTotal);
+
+    tbody.appendChild(tr);
+  }
+
+  // Array com objetos que definem tipo e link
+  const midias = [
+    //{ tipo: "dailymotion", url: "https://www.dailymotion.com/video/x9meegu" },
+    { tipo: "youtube", url: "https://www.youtube.com/watch?v=RFMpZAc0juM" },
+    { tipo: "imagem", url: "telefone.png", linkExterno: "https://geocredibnkvitoria.com/" },
+    { tipo: "imagem", url: "telefone.png", linkExterno: "ads.html" },
+    { tipo: "imagem", url: "telefone.png", linkExterno: "https://www.larissasaib.com.br/" },
+    { tipo: "imagem", url: "telefone.png", linkExterno: "https://hostinger.com.br/?REFERRALCODE=1VICTOR444" },
+    { tipo: "imagem", url: "telefone.png", linkExterno: "https://jogosantigos472302513.wordpress.com/maquinas-vps-temos-todas-as-opcoes-de-maqinas-para-voce/" },
+    { tipo: "imagem", url: "telefone.png", linkExterno: "https://wa.me/5527999497001?text=Olá%2C%20quero%20saber%20mais%20sobre%20seguro%20de%20carro%20no%20Rio%20de%20Janeiro%20ESPIRITOSANTO%20EAFINS...." },
+    { tipo: "imagem", url: "telefone.png", linkExterno: "https://wa.me/5527999860405?text=Olá%2C%20tenho%20interesse%20em%20soluções%20de%20VPS%20e%20ERP.%20Pode%20me%20ajudar%3F" }
+  ];
+
+  function mostrarVideoOuImagem() {
+    const midia = midias[Math.floor(Math.random() * midias.length)];
+    let html = "";
+
+    if (midia.tipo === "youtube") {
+      const url = new URL(midia.url);
+      const videoId = url.searchParams.get("v");
+      html = `<iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}" 
+      title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+    } else if (midia.tipo === "dailymotion") {
+      const videoId = midia.url.split("/video/")[1].split('_')[0];
+      html = `<iframe frameborder="0" width="560" height="315" src="https://www.dailymotion.com/embed/video/${videoId}" allowfullscreen allow="autoplay"></iframe>`;
+    } else if (midia.tipo === "imagem") {
+      html = `<a href="${midia.linkExterno}" target="_blank" rel="noopener noreferrer" title="Link externo">
+                <img src="${midia.url}" alt="Imagem relacionada" />
+              </a>`;
+    } else {
+      html = "<p>Tipo de mídia desconhecido</p>";
+    }
+
+    document.getElementById("video-player").innerHTML = html;
+  }
+
+  // Função para gerar string aleatória (números, letras, especiais)
+  function gerarStringAleatoria(tamanho = 500) {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[]{}|;:,.<>?';
+    let resultado = '';
+    for (let i = 0; i < tamanho; i++) {
+      resultado += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return resultado;
+  }
+
+  // Coloca string aleatória no rodapé
+  document.getElementById('random-footer').textContent = gerarStringAleatoria(20);
+</script>
+
+</body>
+</html>
